@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accessible Photo Gallery</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      text-align: center;
+      padding: 1rem;
+      background-color: #333;
+      color: #fff;
+    }
+
+    .container {
+      padding: 1rem;
+    }
+
+    .large-display {
+      width: 100%;
+      height: 300px;
+      background-color: #eee;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: #555;
+      margin-bottom: 1rem;
+    }
+
+    .gallery {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .gallery img {
+      width: 150px;
+      height: auto;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Accessible Photo Gallery</h1>
+  </header>
+  <main class="container">
+    <!-- Large Display Area -->
+    <div class="large-display" id="largeDisplay" tabindex="0">
+      Hover or focus on an image to see details.
+    </div>
+
+    <!-- Gallery -->
+    <div class="gallery" id="gallery">
+      <img src="sunset.jpg" alt="A beautiful sunrise over the ocean" tabindex="0">
+      <img src="c:\Users\info\Downloads\moutain.jpg" alt="A scenic mountain view" tabindex="0">
+      <img src="forrest.jpg" alt="A peaceful forest with sunlight filtering through trees" tabindex="0">
+      <img src="city.jpg" alt="A city skyline at night with glowing lights" tabindex="0">
+      <img src="c:\Users\info\Downloads\desert.webp" alt="A serene desert landscape with dunes" tabindex="0">
+      <img src="c:\Users\info\Downloads\sea.jpg" alt="A vibrant coral reef underwater" tabindex="0">
+    </div>
+  </main>
+
+  <script>
+    const largeDisplay = document.getElementById("largeDisplay");
+    const galleryImages = document.querySelectorAll("#gallery img");
+
+    const originalText = "Hover or focus on an image to see details.";
+
+    // Add event listeners to each image
+    galleryImages.forEach((image) => {
+      // Mouseover: Update the large display
+      image.addEventListener("mouseover", () => {
+        largeDisplay.style.backgroundImage = `url(${image.src})`;
+        largeDisplay.textContent = image.alt;
+      });
+
+      // Mouseout: Reset the large display
+      image.addEventListener("mouseout", () => {
+        largeDisplay.style.backgroundImage = "none";
+        largeDisplay.textContent = originalText;
+      });
+
+      // Focus: Update the large display
+      image.addEventListener("focus", () => {
+        largeDisplay.style.backgroundImage = `url(${image.src})`;
+        largeDisplay.textContent = image.alt;
+      });
+
+      // Blur: Reset the large display
+      image.addEventListener("blur", () => {
+        largeDisplay.style.backgroundImage = "none";
+        largeDisplay.textContent = originalText;
+      });
+    });
+
+    // Ensure tabindex is set dynamically
+    document.querySelectorAll(".gallery img").forEach((img, index) => {
+      img.setAttribute("tabindex", index + 1);
+    });
+  </script>
+</body>
+</html>
